@@ -51,23 +51,20 @@ const MyModelPurchase = () => {
                 <td>
                   <div className="avatar">
                     <div className="mask mask-squircle h-12 w-12">
-                      <img
-                        src={purchase.modelImage || purchase.image}
-                        alt={purchase.modelName || purchase.name}
-                      />
+                      <img src={purchase.image} alt={purchase.name} />
                     </div>
                   </div>
                 </td>
 
-                <td>{purchase.modelName || purchase.name}</td>
+                <td>{purchase.name}</td>
                 <td>{purchase.framework}</td>
                 <td>{purchase.useCase}</td>
                 <td>{purchase.createdBy}</td>
                 <td>{purchase.purchased_By}</td>
 
                 <td>
-                  <Link to={"/detailsCard/:id"}>
-                    <button className="btn btn-outline btn-xs">
+                  <Link to="/ViewDetails">
+                    <button className="py-5 px-3 btn md:btn btn-outline btn-xs">
                       View Details
                     </button>
                   </Link>
