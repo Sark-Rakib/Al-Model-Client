@@ -86,43 +86,53 @@ const MyModelPurchase = () => {
                 <th>Name</th>
                 <th>framework</th>
                 <th>useCase</th>
-                <th>Purchased By</th>
+                <th>Create_By</th>
+                <th>Purchased_By</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {/* row 1 */}
               {purchases.map((purchase, index) => (
-                <tr>
+                <tr key={purchase._id}>
                   <th>{index + 1}</th>
+
+                  {/* Image */}
                   <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src={purchase.image}
-                            alt="Avatar Tailwind CSS Component"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">{purchase.name}</div>
+                    <div className="avatar">
+                      <div className="mask mask-squircle h-12 w-12">
+                        <img
+                          src={purchase.modelImage || purchase.image}
+                          alt={purchase.name}
+                        />
                       </div>
                     </div>
                   </td>
-                  <td>{purchase.framework}</td>
-                  <td>{purchase.useCase}</td>
-                  <td>{purchase.createdBy}</td>
 
-                  <td>{purchase.dataset}</td>
-                  <th>
+                  {/* Model Name */}
+                  <td className="font-semibold">
+                    {purchase.modelName || purchase.name}
+                  </td>
+
+                  {/* Framework */}
+                  <td>{purchase.framework}</td>
+
+                  {/* Use Case */}
+                  <td>{purchase.useCase}</td>
+
+                  {/* Created By */}
+                  <td>{purchase.createdBy}</td>
+                  <td>{purchase.purchased_By}</td>
+
+                  {/* Actions */}
+                  <td>
                     <button
                       onClick={() => handleRemove(purchase._id)}
                       className="btn btn-outline btn-xs"
                     >
                       Remove
                     </button>
-                  </th>
+                  </td>
                 </tr>
               ))}
             </tbody>
