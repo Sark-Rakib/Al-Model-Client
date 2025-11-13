@@ -37,6 +37,7 @@ const MyModelPurchase = () => {
               <th>Use Case</th>
               <th>Created By</th>
               <th>Purchased By</th>
+
               <th>Actions</th>
             </tr>
           </thead>

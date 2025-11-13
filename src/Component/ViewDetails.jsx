@@ -34,7 +34,7 @@ const ViewDetails = () => {
             <strong>Purchased By:</strong> {data.purchased_By}
           </p>
           <p>
-            <strong>Description:</strong> {data.description}
+            <strong>Purchased At:</strong> {data.purchasedAt}
           </p>
         </div>
       </div>
