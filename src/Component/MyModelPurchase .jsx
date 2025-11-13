@@ -1,143 +1,81 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
-import Loading from "./Loading";
-import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyModelPurchase = () => {
   const { user } = useContext(AuthContext);
   const [purchases, setPurchases] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user?.email);
-
-    fetch(`https://ai-model-server-phi.vercel.app/purchase?email=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPurchases(data);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
-  }, [user?.email]);
-
-  const handleRemove = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "This purchase will be removed permanently!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, remove it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`https://ai-model-server-phi.vercel.app/purchase/${id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
-              Swal.fire({
-                title: "Removed!",
-                text: "Purchase removed successfully.",
-                icon: "success",
-                timer: 1500,
-                showConfirmButton: false,
-              });
-            } else {
-              Swal.fire({
-                title: "Error",
-                text: "Failed to remove purchase.",
-                icon: "error",
-                timer: 1500,
-                showConfirmButton: false,
-              });
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-            Swal.fire({
-              title: "Error",
-              text: "Something went wrong!",
-              icon: "error",
-              timer: 1500,
-              showConfirmButton: false,
-            });
-          });
-      }
-      setPurchases((prev) => prev.filter((p) => p._id !== id));
-    });
-  };
-
-  if (loading) return <Loading />;
+    if (user?.email) {
+      fetch(
+        `https://ai-model-server-phi.vercel.app/purchase?email=${user.email}`
+      )
+        .then((res) => res.json())
+        .then((data) => setPurchases(data))
+        .catch((err) => console.error(err));
+    } else {
+      setPurchases([]);
+    }
+  }, [user]);
 
   return (
     <div className="w-11/12 mx-auto my-10">
-      <h1 className="text-center font-semibold text-2xl mb-5">
-        My Purchase Model: {purchases.length}
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        My Model Purchases:{" "}
+        <span className="text-purple-500">{purchases.length}</span>
       </h1>
 
-      <div className="ml-4">
-        <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>SL No.</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>framework</th>
-                <th>useCase</th>
-                <th>Create_By</th>
-                <th>Purchased_By</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {purchases.map((purchase, index) => (
-                <tr key={purchase._id}>
-                  <th>{index + 1}</th>
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          {/* Table Head */}
+          <thead>
+            <tr>
+              <th>SL No.</th>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Framework</th>
+              <th>Use Case</th>
+              <th>Created By</th>
+              <th>Purchased By</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
 
-                  {/* Image */}
-                  <td>
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src={purchase.modelImage || purchase.image}
-                          alt={purchase.name}
-                        />
-                      </div>
+          {/* Table Body */}
+          <tbody>
+            {purchases.map((purchase, index) => (
+              <tr key={purchase._id}>
+                <th>{index + 1}</th>
+
+                <td>
+                  <div className="avatar">
+                    <div className="mask mask-squircle h-12 w-12">
+                      <img
+                        src={purchase.modelImage || purchase.image}
+                        alt={purchase.modelName || purchase.name}
+                      />
                     </div>
-                  </td>
+                  </div>
+                </td>
 
-                  {/* Model Name */}
-                  <td className="font-semibold">
-                    {purchase.modelName || purchase.name}
-                  </td>
+                <td>{purchase.modelName || purchase.name}</td>
+                <td>{purchase.framework}</td>
+                <td>{purchase.useCase}</td>
+                <td>{purchase.createdBy}</td>
+                <td>{purchase.purchased_By}</td>
 
-                  {/* Framework */}
-                  <td>{purchase.framework}</td>
-
-                  {/* Use Case */}
-                  <td>{purchase.useCase}</td>
-
-                  {/* Created By */}
-                  <td>{purchase.createdBy}</td>
-                  <td>{purchase.purchased_By}</td>
-
-                  {/* Actions */}
-                  <td>
-                    <button
-                      onClick={() => handleRemove(purchase._id)}
-                      className="btn btn-outline btn-xs"
-                    >
-                      Remove
+                <td>
+                  <Link to={`/detailsCard/${purchase.modelId}`}>
+                    <button className="btn btn-outline btn-xs">
+                      View Details
                     </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

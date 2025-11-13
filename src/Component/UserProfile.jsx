@@ -30,9 +30,6 @@ const UserProfile = () => {
           <h1> {user?.displayName}</h1>
           <p>{user?.email}</p>
           <div className="flex gap-10">
-            <button className="mt-10 bg-purple-500 rounded p-2 hover:bg-purple-400">
-              Update Profile
-            </button>
             <button
               onClick={logOutHandler}
               className="mt-10 bg-purple-500 rounded p-2 hover:bg-purple-400"

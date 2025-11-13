@@ -1,8 +1,23 @@
 import { Link, useLoaderData } from "react-router";
 import StaticSections from "./StaticSections ";
+import { useState } from "react";
 
 const AllModel = () => {
   const data = useLoaderData();
+  const [models, setModels] = useState(data);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const searchText = e.target.search.value;
+    console.log(searchText);
+
+    fetch(`http://localhost:5000/search?search=${searchText}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setModels(data);
+      });
+  };
 
   console.log(data);
   return (
@@ -11,13 +26,17 @@ const AllModel = () => {
         <h1 className="text-3xl font-bold mb-6 text-center">
           All <span className="text-purple-400">Models</span>
         </h1>
-        <div className="join">
-          <input className="input join-item" placeholder="Search" />
+        <form onSubmit={handleSearch} className="join">
+          <input
+            className="input join-item"
+            placeholder="Search"
+            name="search"
+          />
           <button className="btn join-item rounded">Search</button>
-        </div>
+        </form>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {data.map((model) => (
+        {models.map((model) => (
           <div
             key={model._id}
             data-aos="fade-right"
