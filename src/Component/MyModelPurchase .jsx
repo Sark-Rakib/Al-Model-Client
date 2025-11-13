@@ -63,7 +63,7 @@ const MyModelPurchase = () => {
                 <td>{purchase.purchased_By}</td>
 
                 <td>
-                  <Link to="/ViewDetails">
+                  <Link to="/models/:id">
                     <button className="py-5 px-3 btn md:btn btn-outline btn-xs">
                       View Details
                     </button>

@@ -19,7 +19,6 @@ import MyModel from "./Component/MyModel.jsx";
 import UserProfile from "./Component/UserProfile.jsx";
 import MyModelPurchase from "./Component/MyModelPurchase .jsx";
 import MyModelDetails from "./Component/MyModelDetails.jsx";
-import ViewDetails from "./Component/ViewDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -69,11 +68,6 @@ const router = createBrowserRouter([
       {
         path: "/userProfile",
         Component: UserProfile,
-      },
-
-      {
-        path: "/ViewDetails",
-        Component: ViewDetails,
       },
       {
         path: "/detailsCard/:id",
