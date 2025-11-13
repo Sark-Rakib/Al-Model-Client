@@ -53,7 +53,7 @@ const Footer = () => {
             <h3 className="text-xl font-semibold text-white mb-3">Follow Us</h3>
             <div className="flex space-x-4 text-lg">
               <a
-                href="https://www.facebook.com/sarkrakib/"
+                href="https://www.facebook.com/"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-blue-500"
@@ -61,7 +61,7 @@ const Footer = () => {
                 <FaFacebook />
               </a>
               <a
-                href="https://x.com"
+                href="https://x.com/Cap_tain01"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-white"
@@ -69,7 +69,7 @@ const Footer = () => {
                 <FaXTwitter />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/rakib-sarker-"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-blue-400"
