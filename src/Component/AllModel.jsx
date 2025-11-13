@@ -92,7 +92,9 @@ const AllModel = () => {
 
             <div className="flex justify-between items-center mt-auto pt-3">
               <p className="text-gray-500 text-xs sm:text-sm">
-                {new Date(model?.createdAt).toLocaleDateString()}
+                {new Date(
+                  model?.createdAt || model?.createAt
+                ).toLocaleDateString()}
               </p>
               <Link to={`/detailsCard/${model._id}`}>
                 <button className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-md text-sm sm:text-base">
