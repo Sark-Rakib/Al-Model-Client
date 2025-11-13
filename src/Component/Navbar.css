@@ -1,0 +1,7 @@
+a.active {
+  color: rgb(203, 221, 228);
+  text-decoration: underline;
+}
+a:hover {
+  color: rgb(203, 221, 228);
+}
