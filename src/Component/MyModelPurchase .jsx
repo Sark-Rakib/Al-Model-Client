@@ -9,15 +9,12 @@ const MyModelPurchase = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user?.email) return;
+    if (!user?.email);
 
-    fetch("https://ai-model-server-phi.vercel.app/purchase")
+    fetch(`https://ai-model-server-phi.vercel.app/purchase?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
-        const userPurchases = data.filter(
-          (item) => item.purchased_By === user.email
-        );
-        setPurchases(userPurchases);
+        setPurchases(data);
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
@@ -38,8 +35,6 @@ const MyModelPurchase = () => {
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount > 0) {
-              // UI থেকে remove
-              setPurchases((prev) => prev.filter((p) => p._id !== id));
               Swal.fire({
                 title: "Removed!",
                 text: "Purchase removed successfully.",
@@ -68,6 +63,7 @@ const MyModelPurchase = () => {
             });
           });
       }
+      setPurchases((prev) => prev.filter((p) => p._id !== id));
     });
   };
 
@@ -79,49 +75,59 @@ const MyModelPurchase = () => {
         My Purchase Model: {purchases.length}
       </h1>
 
-      <div className="overflow-x-auto">
-        <table className="table w-full border">
-          <thead>
-            <tr className="bg-purple-400 text-left">
-              <th>SL No.</th>
-              <th>Name</th>
-              <th>Framework</th>
-              <th>Use Case</th>
-              <th>Created By</th>
-              <th>Purchased By</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {purchases.length === 0 ? (
+      <div className="ml-4">
+        <div className="overflow-x-auto">
+          <table className="table">
+            {/* head */}
+            <thead>
               <tr>
-                <td colSpan={7} className="text-center py-4">
-                  No purchases found.
-                </td>
+                <th>SL No.</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>framework</th>
+                <th>useCase</th>
+                <th>Purchased By</th>
+                <th>Actions</th>
               </tr>
-            ) : (
-              purchases.map((purchase, index) => (
-                <tr key={purchase._id} className="border-t">
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              {purchases.map((purchase, index) => (
+                <tr>
                   <th>{index + 1}</th>
-                  <td>{purchase.name || "-"}</td>
-                  <td>{purchase.framework || "-"}</td>
-                  <td>{purchase.useCase || "-"}</td>
-                  <td>{purchase.createdBy || "-"}</td>
-                  <td>{purchase.purchased_By || "-"}</td>
-
                   <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img
+                            src={purchase.image}
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">{purchase.name}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{purchase.framework}</td>
+                  <td>{purchase.useCase}</td>
+                  <td>{purchase.createdBy}</td>
+
+                  <td>{purchase.dataset}</td>
+                  <th>
                     <button
                       onClick={() => handleRemove(purchase._id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500"
+                      className="btn btn-outline btn-xs"
                     >
                       Remove
                     </button>
-                  </td>
+                  </th>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

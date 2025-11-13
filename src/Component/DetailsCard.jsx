@@ -69,7 +69,12 @@ const DetailsCard = () => {
     }
 
     const purchaseData = {
-      modelId: data._id,
+      name: data.name,
+      image: data.image,
+      framework: data.framework,
+      useCase: data.useCase,
+      dataset: data.dataset,
+      createdBy: data.createdBy,
       purchased_By: user.email,
       purchasedAt: new Date().toISOString(),
     };
