@@ -4,41 +4,69 @@ import { useState } from "react";
 
 const AllModel = () => {
   const data = useLoaderData();
-  const [models, setModels] = useState(data);
+  const [search, setSearch] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [framework, setFramework] = useState("");
+
+  const filteredModels = data.filter((model) => {
+    const matchSearch =
+      !searchText ||
+      (model.name || "").toLowerCase().includes(searchText.toLowerCase());
+    const matchFramework =
+      !framework || model.framework.toLowerCase() === framework.toLowerCase();
+    return matchSearch && matchFramework;
+  });
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const searchText = e.target.search.value;
-    console.log(searchText);
-
-    fetch(`http://localhost:5000/search?search=${searchText}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setModels(data);
-      });
+    setSearchText(search);
   };
 
   return (
-    <div data-aos="fade-right" className="w-11/12 mx-auto my-10">
-      <div className="flex justify-between items-center mb-2">
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          All <span className="text-purple-400">Models</span>
-        </h1>
-        <form onSubmit={handleSearch} className="join">
+    <div className="w-11/12 mx-auto my-10">
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        All <span className="text-purple-400">Models</span>
+      </h1>
+
+      {/* Search + Framework Filter */}
+      <div className="flex flex-col sm:flex-row justify-between mb-6 gap-4">
+        {/* Left side: Search input + button */}
+        <form
+          onSubmit={handleSearch}
+          className="flex flex-1 join  sm:flex-none"
+        >
           <input
-            className="input join-item"
-            placeholder="Search"
-            name="search"
+            type="text"
+            placeholder="Search by Name"
+            className="input input-bordered w-full rounded-l sm:w-60"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-          <button className="btn join-item rounded">Search</button>
+          <button className="btn btn-purple rounded-r" type="submit">
+            Search
+          </button>
         </form>
+
+        {/* Right side: Framework filter */}
+        <select
+          className="select select-bordered w-full sm:w-60"
+          value={framework}
+          onChange={(e) => setFramework(e.target.value)}
+        >
+          <option value="">All Frameworks</option>
+          <option value="TensorFlow">TensorFlow</option>
+          <option value="PyTorch">PyTorch</option>
+          <option value="Keras">Keras</option>
+          <option value="Caffe">Caffe</option>
+          <option value="C++">C++</option>
+        </select>
       </div>
+
+      {/* Models Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {models.map((model) => (
+        {filteredModels.map((model) => (
           <div
             key={model._id}
-            data-aos="fade-right"
             className="p-4 rounded-lg shadow-md bg-white flex flex-col"
           >
             <img
@@ -50,16 +78,16 @@ const AllModel = () => {
               {model.name}
             </h2>
             <h2 className="text-purple-400 sm:font-semibold mt-3">
-              Created_by: {model?.createdBy}
+              Created by: {model.createdBy}
             </h2>
             <p className="mt-1 text-gray-700 text-sm sm:text-base">
-              Framework: {model?.framework}
+              Framework: {model.framework}
             </p>
             <p className="mt-1 text-gray-700 text-sm sm:text-base">
-              Use Case: {model?.useCase}
+              Use Case: {model.useCase}
             </p>
             <p className="mt-1 text-gray-700 text-sm sm:text-base">
-              Dataset: {model?.dataset}
+              Dataset: {model.dataset}
             </p>
 
             <div className="flex justify-between items-center mt-auto pt-3">
@@ -75,7 +103,8 @@ const AllModel = () => {
           </div>
         ))}
       </div>
-      <StaticSections></StaticSections>
+
+      <StaticSections />
     </div>
   );
 };
