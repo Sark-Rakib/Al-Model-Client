@@ -22,7 +22,7 @@ const MyModelPurchase = () => {
   return (
     <div className="w-11/12 mx-auto my-10">
       <h1 className="text-3xl font-bold mb-6 text-center">
-        My Model Purchases:{" "}
+        My Model Purchases:
         <span className="text-purple-500">{purchases.length}</span>
       </h1>
 
@@ -66,7 +66,7 @@ const MyModelPurchase = () => {
                 <td>{purchase.purchased_By}</td>
 
                 <td>
-                  <Link to={`/detailsCard/${purchase.modelId}`}>
+                  <Link to={"/detailsCard/:id"}>
                     <button className="btn btn-outline btn-xs">
                       View Details
                     </button>

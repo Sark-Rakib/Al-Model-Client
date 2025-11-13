@@ -69,6 +69,7 @@ const DetailsCard = () => {
     }
 
     const purchaseData = {
+      id: data._id,
       name: data.name,
       image: data.image,
       framework: data.framework,
