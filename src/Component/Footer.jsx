@@ -53,7 +53,7 @@ const Footer = () => {
             <h3 className="text-xl font-semibold text-white mb-3">Follow Us</h3>
             <div className="flex space-x-4 text-lg">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/sarkrakib/"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-blue-500"
@@ -77,7 +77,7 @@ const Footer = () => {
                 <FaLinkedinIn />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/Sark-Rakib"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-gray-100"
