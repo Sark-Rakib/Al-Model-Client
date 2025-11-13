@@ -19,7 +19,6 @@ const AllModel = () => {
       });
   };
 
-  console.log(data);
   return (
     <div data-aos="fade-right" className="w-11/12 mx-auto my-10">
       <div className="flex justify-between items-center mb-2">
