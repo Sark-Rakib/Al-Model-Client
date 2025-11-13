@@ -19,6 +19,7 @@ import MyModel from "./Component/MyModel.jsx";
 import UserProfile from "./Component/UserProfile.jsx";
 import MyModelPurchase from "./Component/MyModelPurchase .jsx";
 import MyModelDetails from "./Component/MyModelDetails.jsx";
+import ViewDetails from "./Component/ViewDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,21 @@ const router = createBrowserRouter([
         path: "/userProfile",
         Component: UserProfile,
       },
+
+      {
+        path: "/ViewDetails/:id",
+
+        loader: ({ params }) =>
+          fetch(`https://ai-model-server-phi.vercel.app/purchase/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <ViewDetails></ViewDetails>
+          </PrivateRoute>
+        ),
+
+        hydrateFallbackElement: <Loading></Loading>,
+      },
+
       {
         path: "/detailsCard/:id",
         loader: ({ params }) =>
