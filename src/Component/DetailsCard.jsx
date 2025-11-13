@@ -37,7 +37,7 @@ const DetailsCard = () => {
             } else {
               Swal.fire({
                 title: "Error",
-                text: "Delete failed or nothing to delete!",
+                text: "Delete failed!",
                 icon: "error",
                 timer: 1500,
                 showConfirmButton: false,
