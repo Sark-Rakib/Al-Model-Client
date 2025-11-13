@@ -66,7 +66,7 @@ const MyModelPurchase = () => {
 
                 <td>
                   <Link to={`/ViewDetails/${purchase._id}`}>
-                    <button className="btn btn-outline btn-xs">
+                    <button className="btn btn-outline btn-xs p-4">
                       View Details
                     </button>
                   </Link>
